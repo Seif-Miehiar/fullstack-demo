@@ -2,12 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const Todo = require("./database/db");
+const Todo = require("./models/todo.model");
 
 // create express app
 const app = express();
 
-DATABASE_URL = `mongodb://localhost:27017/node-express-mongodb-server`;
+DATABASE_URL = `mongodb://localhost:27017/todo-fullstack-demo`;
 const PORT = 3001;
 
 // parse requests of content-type - application/x-www-form-urlencoded
@@ -39,6 +39,9 @@ mongoose
 		console.log("Could not connect to the database. Exiting now...", err);
 		process.exit();
 	});
+
+//including the routes in server from the routes directory.
+require("./routes/todo.routes.js")(app);
 
 // listen for requests
 app.listen(PORT, () => {

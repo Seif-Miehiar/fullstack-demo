@@ -32,3 +32,4 @@ const Todo = mongoose.model("Todo", todoSchema);
 
 //exporting the schema to require in our server.js file
 module.exports = Todo;
+// module.exports = mongoose.model("Note", NoteSchema);
