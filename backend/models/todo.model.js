@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const todoSchema = new mongoose.Schema(
 	{
-		userName: {
-			type: String,
-			required: true,
-		},
+		// userName: {
+		// 	type: String,
+		// 	required: true,
+		// },
 		todoName: {
 			type: String,
 			required: true,
@@ -14,16 +14,16 @@ const todoSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		todoPriority: {
-			type: Number,
-			min: 1,
-			max: 3,
-			required: true,
-		},
-		todoCheck: {
-			type: Boolean,
-			required: true,
-		},
+		// todoPriority: {
+		// 	type: Number,
+		// 	min: 1,
+		// 	max: 3,
+		// 	required: true,
+		// },
+		// todoCheck: {
+		// 	type: Boolean,
+		// 	required: true,
+		// },
 	},
 	{ timestamps: true }
 );

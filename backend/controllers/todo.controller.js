@@ -3,7 +3,7 @@ const Todo = require("../models/todo.model.js");
 // Create and Save a new Todo
 exports.create = (req, res) => {
 	// Validate request
-	// console.log(req);
+	console.log(req.body);
 	if (!req.body) {
 		return res.status(400).send({
 			message: "Todo content can not be empty",
@@ -36,7 +36,12 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 	Todo.find()
 		.then((todos) => {
-			res.send(todos);
+			// console.log(todos);
+			if (todos) {
+				res.send(todos);
+			} else {
+				res.send("No todos available, add one!");
+			}
 		})
 		.catch((err) => {
 			res.status(500).send({

@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const Todo = require("./models/todo.model");
 
@@ -9,8 +10,9 @@ const app = express();
 const path = require("path");
 
 DATABASE_URL = `mongodb://localhost:27017/todo`;
-const PORT = 3001;
-
+const PORT = 3004;
+app.use(cors());
+app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -20,12 +22,12 @@ app.use(express.static(path.join(__dirname, "../build")));
 app.use(bodyParser.json());
 
 // define a simple route
-app.get("/", (req, res) => {
-	res.json({
-		message:
-			"Welcome to Todo fullstack Demo application. Take a todo quickly. Organize and keep track of all your todos.",
-	});
-});
+// app.get("/", (req, res) => {
+// 	res.json({
+// 		message:
+// 			"Welcome to Todo fullstack Demo application. Take a todo quickly. Organize and keep track of all your todos.",
+// 	});
+// });
 
 mongoose.Promise = global.Promise;
 
