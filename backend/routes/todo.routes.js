@@ -1,18 +1,18 @@
 module.exports = (app) => {
-	const Todos = require("../controllers/todo.controller.js");
+	const Todos = require("../controllers/todo.controller");
 
 	// Create a new Todo
-	app.post("/todos", todos.create);
+	app.post("/todos", Todos.create);
 
 	// Retrieve all Todos
-	app.get("/todos", todos.findAll);
+	app.get("/todos", Todos.findAll);
 
 	// Retrieve a single Todo with todoId
-	app.get("/todos/:todoId", todos.findOne);
+	app.get("/todos/:todoId", Todos.findOne);
 
 	// Update a Todo with todoId
-	app.put("/todos/:todoId", todos.update);
+	app.put("/todos/:todoId", Todos.update);
 
 	// Delete a Todo with todoId
-	app.delete("/todos/:todoId", todos.delete);
+	app.delete("/todos/:todoId", Todos.delete);
 };

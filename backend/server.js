@@ -6,12 +6,15 @@ const Todo = require("./models/todo.model");
 
 // create express app
 const app = express();
+const path = require("path");
 
-DATABASE_URL = `mongodb://localhost:27017/todo-fullstack-demo`;
+DATABASE_URL = `mongodb://localhost:27017/todo`;
 const PORT = 3001;
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "../build")));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -20,7 +23,7 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
 	res.json({
 		message:
-			"Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes.",
+			"Welcome to Todo fullstack Demo application. Take a todo quickly. Organize and keep track of all your todos.",
 	});
 });
 
