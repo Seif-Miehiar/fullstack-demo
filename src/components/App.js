@@ -1,89 +1,139 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import APIHelper from "../APIHelper";
-// import ReactDOM from "react-dom";
-// import axios from "axios";
+import React from "react";
+import $ from "jquery";
 
-const API_URL = "http://localhost:3004/todos/";
+export default class App extends React.Component {
+	constructor(props) {
+		super(props);
 
-function App() {
-	const [todos, setTodos] = useState([]);
-	const [todo, setTodo] = useState("");
-
-	useEffect(() => {
-		const fetchTodoAndSetTodos = async () => {
-			const todos = await APIHelper.getAllTodos();
-			setTodos(todos);
+		this.state = {
+			todo: "",
 		};
-		fetchTodoAndSetTodos();
-	}, []);
+	}
+	onChange(e) {
+		console.log(e.target.value);
+		this.setState({ todo: e.target.value });
+	}
+	handlePost(e) {
+		console.log(e);
+		var todo = this.state.todo;
+		$.ajax({
+			method: "POST",
+			url: "http://localhost:3004/todos",
+			data: JSON.stringify({ todo }),
+			contentType: "application/json",
+			success: (data) => {
+				console.log(`success: ${data}`);
+			},
+			error: (err) => {
+				console.log(err);
+				throw err;
+			},
+		});
+	}
+	handleGet(e) {}
 
-	const createTodo = async (e) => {
-		e.preventDefault();
-		if (!todo) {
-			alert("please enter something");
-			return;
-		}
-		if (todos.some(({ task }) => task === todo)) {
-			alert(`Task: ${todo} already exists`);
-			return;
-		}
-		const newTodo = await APIHelper.createTodo(todo);
-		console.log(newTodo);
-		setTodos([...todos, newTodo]);
-	};
-
-	const deleteTodo = async (e, id) => {
-		try {
-			e.stopPropagation();
-			await APIHelper.deleteTodo(id);
-			setTodos(todos.filter(({ _id: i }) => id !== i));
-		} catch (err) {}
-	};
-
-	const updateTodo = async (e, id) => {
-		e.stopPropagation();
-		const payload = {
-			completed: !todos.find((todo) => todo._id === id).completed,
-		};
-		const updatedTodo = await APIHelper.updateTodo(id, payload);
-		setTodos(todos.map((todo) => (todo._id === id ? updatedTodo : todo)));
-	};
-
-	return (
-		<div className="App">
+	render() {
+		return (
 			<div>
 				<input
 					type="text"
-					value={todo}
-					onChange={({ target }) => setTodo(target.value)}
-					placeholder="Enter a todo"
+					value={this.state.todo}
+					onChange={this.onChange.bind(this)}
 				/>
-				<button type="button" onClick={createTodo}>
-					Add
+				<button type="button" onClick={this.handlePost.bind(this)}>
+					Add Todo
 				</button>
+				<button handleGet={this.handleGet.bind(this)}>Get Todo</button>
 			</div>
-
-			<ul>
-				{todos.length ? (
-					todos.map(({ _id, task, completed }, i) => (
-						<li
-							key={i}
-							onClick={(e) => updateTodo(e, _id)}
-							className={completed ? "completed" : ""}
-						>
-							{task} <span onClick={(e) => deleteTodo(e, _id)}>X</span>
-						</li>
-					))
-				) : (
-					<p>No Todos Yet :(</p>
-				)}
-			</ul>
-		</div>
-	);
+		);
+	}
 }
+// import React, { useState, useEffect } from "react";
+// import "./App.css";
+// import APIHelper from "../APIHelper";
+// // import ReactDOM from "react-dom";
+// // import axios from "axios";
 
-export default App;
+// const API_URL = "http://localhost:3004/todos/";
+
+// function App() {
+// 	const [todos, setTodos] = useState([]);
+// 	const [todo, setTodo] = useState("");
+
+// 	useEffect(() => {
+// 		const fetchTodoAndSetTodos = async () => {
+// 			const todos = await APIHelper.getAllTodos();
+// 			setTodos(todos);
+// 		};
+// 		fetchTodoAndSetTodos();
+// 	}, []);
+
+// 	const createTodo = async (e) => {
+// 		e.preventDefault();
+// 		if (!todo) {
+// 			alert("please enter something");
+// 			return;
+// 		}
+// 		if (todos.some(({ task }) => task === todo)) {
+// 			alert(`Task: ${todo} already exists`);
+// 			return;
+// 		}
+// 		const newTodo = await APIHelper.createTodo(todo);
+// 		console.log(newTodo);
+// 		setTodos([...todos, newTodo]);
+// 	};
+
+// 	const deleteTodo = async (e, id) => {
+// 		try {
+// 			e.stopPropagation();
+// 			await APIHelper.deleteTodo(id);
+// 			setTodos(todos.filter(({ _id: i }) => id !== i));
+// 		} catch (err) {}
+// 	};
+
+// 	const updateTodo = async (e, id) => {
+// 		e.stopPropagation();
+// 		const payload = {
+// 			completed: !todos.find((todo) => todo._id === id).completed,
+// 		};
+// 		const updatedTodo = await APIHelper.updateTodo(id, payload);
+// 		setTodos(todos.map((todo) => (todo._id === id ? updatedTodo : todo)));
+// 	};
+
+// 	return (
+// 		<div className="App">
+// 			<div>
+// 				<input
+// 					type="text"
+// 					value={todo}
+// 					onChange={({ target }) => setTodo(target.value)}
+// 					placeholder="Enter a todo"
+// 				/>
+// 				<button type="button" onClick={createTodo}>
+// 					Add
+// 				</button>
+// 			</div>
+
+// 			<ul>
+// 				{todos.length ? (
+// 					todos.map(({ _id, task, completed }, i) => (
+// 						<li
+// 							key={i}
+// 							onClick={(e) => updateTodo(e, _id)}
+// 							className={completed ? "completed" : ""}
+// 						>
+// 							{task} <span onClick={(e) => deleteTodo(e, _id)}>X</span>
+// 						</li>
+// 					))
+// 				) : (
+// 					<p>No Todos Yet :(</p>
+// 				)}
+// 			</ul>
+// 		</div>
+// 	);
+// }
+
+// export default App;
 // import Header from "./header";
 // import SubmitForm from "./submitForm";
 // import TodoList from "./todoList";

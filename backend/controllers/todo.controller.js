@@ -3,7 +3,7 @@ const Todo = require("../models/todo.model.js");
 // Create and Save a new Todo
 exports.create = (req, res) => {
 	// Validate request
-	console.log(req.body);
+	console.log("line 6", req.body);
 	if (!req.body) {
 		return res.status(400).send({
 			message: "Todo content can not be empty",
@@ -12,11 +12,12 @@ exports.create = (req, res) => {
 
 	// Create a Todo
 	const todo = new Todo({
-		userName: req.body.userName || "Untitled Todo",
 		todoName: req.body.todoName,
-		todoDescription: req.body.todoDescription,
-		todoPriority: req.body.todoPriority,
-		todoCheck: req.body.todoCheck,
+		// userName: req.body.userName || "Untitled Todo",
+		// todoName: req.body.todoName,
+		// todoDescription: req.body.todoDescription,
+		// todoPriority: req.body.todoPriority,
+		// todoCheck: req.body.todoCheck,
 	});
 
 	// Save Todo in the database

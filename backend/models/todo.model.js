@@ -12,11 +12,11 @@ const todoSchema = new mongoose.Schema(
 			unique: true, // it has to be unique
 			required: true, // it is required
 		},
-		completed: {
-			// field2: completed
-			type: Boolean, // it is a boolean
-			default: false, // the default is false
-		},
+		// completed: {
+		// 	// field2: completed
+		// 	type: Boolean, // it is a boolean
+		// 	default: false, // the default is false
+		// },
 		// todoDescription: {
 		// 	type: String,
 		// 	required: true,
