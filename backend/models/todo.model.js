@@ -7,13 +7,20 @@ const todoSchema = new mongoose.Schema(
 		// 	required: true,
 		// },
 		todoName: {
-			type: String,
-			required: true,
+			// field1: task
+			type: String, // task is a string
+			unique: true, // it has to be unique
+			required: true, // it is required
 		},
-		todoDescription: {
-			type: String,
-			required: true,
+		completed: {
+			// field2: completed
+			type: Boolean, // it is a boolean
+			default: false, // the default is false
 		},
+		// todoDescription: {
+		// 	type: String,
+		// 	required: true,
+		// },
 		// todoPriority: {
 		// 	type: Number,
 		// 	min: 1,
@@ -28,8 +35,8 @@ const todoSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const Todo = mongoose.model("Todo", todoSchema);
+// creating the model from the schema
+const todoModel = mongoose.model("Todo", todoSchema);
 
 //exporting the schema to require in our server.js file
-module.exports = Todo;
-// module.exports = mongoose.model("Note", NoteSchema);
+module.exports = todoModel;
